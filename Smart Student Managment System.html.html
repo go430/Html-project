@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Student Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <h2>📚 SSMS</h2>
+                <p>Student Management</p>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active" data-page="dashboard">Dashboard</a></li>
+                <li><a href="#" class="nav-link" data-page="students">Students</a></li>
+                <li><a href="#" class="nav-link" data-page="courses">Courses</a></li>
+                <li><a href="#" class="nav-link" data-page="grades">Grades</a></li>
+                <li><a href="#" class="nav-link" data-page="attendance">Attendance</a></li>
+                <li><a href="#" class="nav-link" data-page="reports">Reports</a></li>
+            </ul>
+            <div class="user-profile">
+                <img src="https://via.placeholder.com/40" alt="User">
+                <div>
+                    <p>Admin</p>
+                    <small>Administrator</small>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h1 id="page-title">Dashboard</h1>
+                <div class="header-actions">
+                    <input type="search" id="search-input" placeholder="Search...">
+                    <button class="btn-icon">🔔</button>
+                    <button class="btn-icon">⚙️</button>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-area">
+
+                <!-- Dashboard Page -->
+                <section id="dashboard" class="page active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">👥</div>
+                            <div class="stat-info">
+                                <h3>Total Students</h3>
+                                <p class="stat-number" id="total-students">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">📖</div>
+                            <div class="stat-info">
+                                <h3>Total Courses</h3>
+                                <p class="stat-number" id="total-courses">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">📊</div>
+                            <div class="stat-info">
+                                <h3>Average GPA</h3>
+                                <p class="stat-number" id="avg-gpa">0.0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">✅</div>
+                            <div class="stat-info">
+                                <h3>Attendance Rate</h3>
+                                <p class="stat-number" id="attendance-rate">0%</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <h3>Recent Students</h3>
+                            <div id="recent-students" class="table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Student ID</th>
+                                            <th>Email</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recent-students-tbody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Students Page -->
+                <section id="students" class="page">
+                    <div class="page-header">
+                        <h2>Student Management</h2>
+                        <button class="btn btn-primary" id="add-student-btn">+ Add Student</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="filters">
+                            <input type="search" id="student-search" placeholder="Search by name or ID...">
+                            <select id="status-filter">
+                                <option value="">All Status</option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                                <option value="Graduated">Graduated</option>
+                            </select>
+                        </div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Student ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Enrollment Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="students-tbody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Courses Page -->
+                <section id="courses" class="page">
+                    <div class="page-header">
+                        <h2>Course Management</h2>
+                        <button class="btn btn-primary" id="add-course-btn">+ Add Course</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="filters">
+                            <input type="search" id="course-search" placeholder="Search courses...">
+                            <select id="semester-filter">
+                                <option value="">All Semesters</option>
+                                <option value="Fall 2024">Fall 2024</option>
+                                <option value="Spring 2025">Spring 2025</option>
+                                <option value="Summer 2025">Summer 2025</option>
+                            </select>
+                        </div>
+                        <div class="courses-grid">
+                            <div id="courses-container"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Grades Page -->
+                <section id="grades" class="page">
+                    <div class="page-header">
+                        <h2>Grade Management</h2>
+                        <button class="btn btn-primary" id="add-grade-btn">+ Add Grade</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="filters">
+                            <select id="student-grade-filter" placeholder="Select Student">
+                                <option value="">All Students</option>
+                            </select>
+                            <select id="course-grade-filter" placeholder="Select Course">
+                                <option value="">All Courses</option>
+                            </select>
+                        </div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Course</th>
+                                        <th>Midterm</th>
+                                        <th>Final</th>
+                                        <th>Assignment</th>
+                                        <th>Total</th>
+                                        <th>Grade</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="grades-tbody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Attendance Page -->
+                <section id="attendance" class="page">
+                    <div class="page-header">
+                        <h2>Attendance Management</h2>
+                        <button class="btn btn-primary" id="mark-attendance-btn">+ Mark Attendance</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="filters">
+                            <select id="attendance-course-filter">
+                                <option value="">All Courses</option>
+                            </select>
+                            <input type="date" id="attendance-date-filter">
+                        </div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Course</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="attendance-tbody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Reports Page -->
+                <section id="reports" class="page">
+                    <div class="page-header">
+                        <h2>Reports & Analytics</h2>
+                    </div>
+
+                    <div class="reports-grid">
+                        <div class="card">
+                            <h3>Grade Distribution</h3>
+                            <div id="grade-chart" class="chart-placeholder">
+                                <canvas id="gradeCanvas"></canvas>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3>Attendance Overview</h3>
+                            <div id="attendance-chart" class="chart-placeholder">
+                                <canvas id="attendanceCanvas"></canvas>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3>Student Performance</h3>
+                            <div id="performance-list">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Student</th>
+                                            <th>Average Grade</th>
+                                            <th>Attendance %</th>
+                                            <th>Performance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="performance-tbody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Add/Edit Student Modal -->
+    <div id="studentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="student-modal-title">Add Student</h2>
+            <form id="studentForm">
+                <div class="form-group">
+                    <label>Student ID:</label>
+                    <input type="text" id="studentId" required>
+                </div>
+                <div class="form-group">
+                    <label>Full Name:</label>
+                    <input type="text" id="studentName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="studentEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone:</label>
+                    <input type="tel" id="studentPhone">
+                </div>
+                <div class="form-group">
+                    <label>Date of Birth:</label>
+                    <input type="date" id="studentDOB">
+                </div>
+                <div class="form-group">
+                    <label>Enrollment Date:</label>
+                    <input type="date" id="enrollmentDate" required>
+                </div>
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select id="studentStatus" required>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                        <option value="Graduated">Graduated</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Student</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add/Edit Course Modal -->
+    <div id="courseModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="course-modal-title">Add Course</h2>
+            <form id="courseForm">
+                <div class="form-group">
+                    <label>Course Code:</label>
+                    <input type="text" id="courseCode" required>
+                </div>
+                <div class="form-group">
+                    <label>Course Name:</label>
+                    <input type="text" id="courseName" required>
+                </div>
+                <div class="form-group">
+                    <label>Instructor:</label>
+                    <input type="text" id="courseInstructor" required>
+                </div>
+                <div class="form-group">
+                    <label>Credits:</label>
+                    <input type="number" id="courseCredits" min="1" max="5" required>
+                </div>
+                <div class="form-group">
+                    <label>Semester:</label>
+                    <select id="courseSemester" required>
+                        <option value="Fall 2024">Fall 2024</option>
+                        <option value="Spring 2025">Spring 2025</option>
+                        <option value="Summer 2025">Summer 2025</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea id="courseDescription"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Course</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add/Edit Grade Modal -->
+    <div id="gradeModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="grade-modal-title">Add Grade</h2>
+            <form id="gradeForm">
+                <div class="form-group">
+                    <label>Student:</label>
+                    <select id="gradeStudent" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Course:</label>
+                    <select id="gradeCourse" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Midterm (0-30):</label>
+                    <input type="number" id="midtermGrade" min="0" max="30" required>
+                </div>
+                <div class="form-group">
+                    <label>Final (0-40):</label>
+                    <input type="number" id="finalGrade" min="0" max="40" required>
+                </div>
+                <div class="form-group">
+                    <label>Assignment (0-30):</label>
+                    <input type="number" id="assignmentGrade" min="0" max="30" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Grade</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mark Attendance Modal -->
+    <div id="attendanceModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Mark Attendance</h2>
+            <form id="attendanceForm">
+                <div class="form-group">
+                    <label>Course:</label>
+                    <select id="attendanceCourse" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Date:</label>
+                    <input type="date" id="attendanceDate" required>
+                </div>
+                <div id="attendance-students-list" class="attendance-list"></div>
+                <button type="submit" class="btn btn-primary">Mark Attendance</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
